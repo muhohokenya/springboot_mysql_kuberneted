@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: students-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: students-app
+  template:
+    metadata:
+      labels:
+        app: students-app
+    spec:
+      containers:
+        - name: students-app
+          image: muhohoweb/students-app
+          ports:
+            - containerPort: 8081
+          env:
+            - name: POSTGRES_HOST
+              value: postgresql
+            - name: POSTGRES_PORT
+              value: "5432"
+            - name: POSTGRES_DB
+              value: studentsdb
+            - name: POSTGRES_USER
+              value: root
+            - name: POSTGRES_PASSWORD
+              value: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: students-app-service
+spec:
+  selector:
+    app: students-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+      

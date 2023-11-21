@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+data:
+  init.sql: |
+    CREATE TABLE students (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        adm_no VARCHAR(10) NOT NULL,
+        age INTEGER NOT NULL
+    );
+    INSERT INTO students (name, adm_no, age) VALUES
+        ('John Doe', 'A001', 20),
+        ('Jane Doe', 'A002', 22),
+        ('Bob Smith', 'A003', 21),
+        ('Alice Johnson', 'A004', 23),
+        ('Charlie Brown', 'A005', 24);
